@@ -1,0 +1,60 @@
+import { Head, Form } from '@inertiajs/react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import Heading from '@/components/heading';
+import InputError from '@/components/input-error';
+
+export default function GradesCreate() {
+    return (
+        <>
+            <Head title="Tambah Grade" />
+            <div className="flex h-full flex-1 flex-col gap-6 overflow-x-auto p-6">
+                <Heading title="Tambah Grade" />
+
+                <Card className="max-w-2xl border-[var(--border)]">
+                    <CardContent className="p-6">
+                        <Form method="post" action="/admin/grades" className="space-y-4">
+                            {({ processing, errors }) => (
+                                <>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="code">Kode</Label>
+                                        <Input id="code" name="code" placeholder="GRD001" className="h-10 rounded-lg" required />
+                                        <InputError message={errors.code} />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="name">Nama</Label>
+                                        <Input id="name" name="name" placeholder="Grade A" className="h-10 rounded-lg" required />
+                                        <InputError message={errors.name} />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="profile">Profil</Label>
+                                        <textarea id="profile" name="profile" rows={4} className="flex min-h-[80px] w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm" placeholder="Deskripsi grade..." />
+                                        <InputError message={errors.profile} />
+                                    </div>
+                                    <div className="flex justify-end gap-2">
+                                        <Button type="button" variant="outline" onClick={() => window.history.back()}>
+                                            Batal
+                                        </Button>
+                                        <Button type="submit" loading={processing}>
+                                            Simpan
+                                        </Button>
+                                    </div>
+                                </>
+                            )}
+                        </Form>
+                    </CardContent>
+                </Card>
+            </div>
+        </>
+    );
+}
+
+GradesCreate.layout = {
+    breadcrumbs: [
+        { title: 'Dashboard', href: '/admin' },
+        { title: 'Grade', href: '/admin/grades' },
+        { title: 'Tambah', href: '/admin/grades/create' },
+    ],
+};
